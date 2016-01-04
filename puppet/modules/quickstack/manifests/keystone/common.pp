@@ -98,7 +98,7 @@ class quickstack::keystone::common (
     log_facility                       => $log_facility,
     public_bind_host                   => $public_bind_host,
     public_endpoint                    => "http://${public_endpoint}:5000/",
-    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+    #rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
     rabbit_host                        => $amqp_host,
     rabbit_port                        => $amqp_port,
     rabbit_hosts                       => $rabbit_hosts,
