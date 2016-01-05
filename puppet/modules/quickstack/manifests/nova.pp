@@ -168,7 +168,7 @@ class quickstack::nova (
       qpid_heartbeat                     => $qpid_heartbeat,
       qpid_username                      => $amqp_username,
       qpid_password                      => $amqp_password,
-      rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+      #rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
       rabbit_port                        => $amqp_port,
       rabbit_host                        => $amqp_hostname,
       rabbit_userid                      => $amqp_username,

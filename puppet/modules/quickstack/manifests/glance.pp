@@ -134,7 +134,7 @@ class quickstack::glance (
     }
   } else {
     class { 'glance::notify::rabbitmq':
-      rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+      #rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
       rabbit_password                    => $amqp_password,
       rabbit_userid                      => $amqp_username,
       rabbit_host                        => $amqp_host,
