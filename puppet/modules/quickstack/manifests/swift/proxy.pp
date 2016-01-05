@@ -23,10 +23,15 @@ class quickstack::swift::proxy (
       # for more on that, see
       # /usr/share/doc/openstack-swift-proxy-1.9.1/proxy-server.conf-sample
       pipeline           => [
+        'catch_errors',
         'healthcheck',
         'cache',
-        'proxy-logging',
+        'ratelimit',
+        'tempurl',
+        'formpost',
+        'ceilometer',
         'authtoken',
+        'staticweb',
         'keystone',
         'proxy-logging',
         'proxy-server'
@@ -38,7 +43,7 @@ class quickstack::swift::proxy (
     # this declaration is needed so that the pipeline loop in
     # puppet-swift/manaifests/proxy.pp doesn't break.  note that
     # it ends up including the real logging class, proxy_logging
-    class { '::swift::proxy::proxy-logging': }
+    #class { '::swift::proxy::proxy-logging': }
 
     # configure all of the middlewares
     class { [
