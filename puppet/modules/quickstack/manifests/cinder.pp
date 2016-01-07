@@ -61,7 +61,7 @@ class quickstack::cinder(
     qpid_password                      => $amqp_password_safe_for_cinder,
     qpid_heartbeat                     => $qpid_heartbeat,
     qpid_protocol                      => $qpid_protocol,
-    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+    #rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
     rabbit_host                        => $amqp_host,
     rabbit_port                        => $amqp_port,
     rabbit_userid                      => $amqp_username,

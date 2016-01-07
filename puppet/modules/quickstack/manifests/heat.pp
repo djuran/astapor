@@ -68,7 +68,7 @@ class quickstack::heat(
     qpid_port                          => $amqp_port,
     qpid_username                      => $amqp_username,
     qpid_password                      => $amqp_password,
-    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+#    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
     rabbit_host                        => $amqp_host,
     rabbit_port                        => $amqp_port,
     rabbit_userid                      => $amqp_username,
