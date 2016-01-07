@@ -106,7 +106,7 @@ class quickstack::neutron::compute (
     qpid_protocol                      => $qpid_protocol,
     qpid_username                      => $amqp_username,
     qpid_password                      => $amqp_password,
-    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+#    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
     rabbit_host                        => $amqp_host,
     rabbit_port                        => $real_amqp_port,
     rabbit_user                        => $amqp_username,

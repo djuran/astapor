@@ -51,7 +51,7 @@ class quickstack::ceilometer::control(
     rabbit_port                        => $amqp_port,
     rabbit_userid                      => $amqp_username,
     rabbit_password                    => $amqp_password,
-    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
+#    rabbit_heartbeat_timeout_threshold => $amqp_heartbeat_timeout_threshold,
     rabbit_hosts                       => $rabbit_hosts,
     rpc_backend                        => amqp_backend('ceilometer', $amqp_provider),
     verbose                            => str2bool_i("$verbose"),
