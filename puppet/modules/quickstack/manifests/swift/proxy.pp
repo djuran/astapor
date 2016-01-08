@@ -29,7 +29,10 @@ class quickstack::swift::proxy (
         'ratelimit',
         'tempurl',
         'formpost',
-        'ceilometer',
+#TODO: Ceilometer should be added to the pipeline
+# Why does swift::proxy::ceilometer inherit swift???
+# https://github.com/redhat-openstack/openstack-puppet-modules/blob/kilo/swift/manifests/proxy/ceilometer.pp#L26
+#        'ceilometer',
         'authtoken',
         'staticweb',
         'keystone',
@@ -44,6 +47,7 @@ class quickstack::swift::proxy (
     # puppet-swift/manaifests/proxy.pp doesn't break.  note that
     # it ends up including the real logging class, proxy_logging
     #class { '::swift::proxy::proxy-logging': }
+    class { '::swift::proxy::proxy_logging': }
 
     # configure all of the middlewares
     class { [
@@ -63,8 +67,11 @@ class quickstack::swift::proxy (
     class { [
       '::swift::proxy::tempurl',
       '::swift::proxy::formpost',
-      '::swift::proxy::ceilometer'
     ]: }
+
+#    class { '::swift::proxy::ceilometer':
+#      swift_hash_suffix => $swift_shared_secret
+#    }
 
     class { '::swift::proxy::keystone':
         operator_roles => ['admin', 'SwiftOperator'],
