@@ -60,6 +60,12 @@ class quickstack::swift::proxy (
         account_ratelimit      => 0
     }
 
+    class { [
+      '::swift::proxy::tempurl',
+      '::swift::proxy::formpost',
+      '::swift::proxy::ceilometer'
+    ]: }
+
     class { '::swift::proxy::keystone':
         operator_roles => ['admin', 'SwiftOperator'],
     }
@@ -71,6 +77,8 @@ class quickstack::swift::proxy (
         # assume that the controller host is the swift api server
         auth_host         => $keystone_host,
     }
+
+    class { '::swift::proxy::staticweb': }
 
     class {'quickstack::swift::common':
       swift_shared_secret => $swift_shared_secret,
