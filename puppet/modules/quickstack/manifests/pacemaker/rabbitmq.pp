@@ -70,15 +70,17 @@ class quickstack::pacemaker::rabbitmq (
         'cluster_partition_handling' => 'pause_minority'
       },
     }
-
-    class {'::quickstack::load_balancer::amqp':
-      frontend_host        => $amqp_vip,
-      backend_server_names => map_params("lb_backend_server_names"),
-      backend_server_addrs => map_params("lb_backend_server_addrs"),
-      port                 => map_params("amqp_port"),
-      backend_port         => map_params("amqp_port"),
-      timeout              => $haproxy_timeout,
-      extra_listen_options => {'option' => ['tcpka','tcplog']},
+    
+    if (! str2bool_i(map_params('rabbitmq_use_addrs_not_vip'))) {
+      class {'::quickstack::load_balancer::amqp':
+        frontend_host        => $amqp_vip,
+        backend_server_names => map_params("lb_backend_server_names"),
+        backend_server_addrs => map_params("lb_backend_server_addrs"),
+        port                 => map_params("amqp_port"),
+        backend_port         => map_params("amqp_port"),
+        timeout              => $haproxy_timeout,
+        extra_listen_options => {'option' => ['tcpka','tcplog']},
+      }
     }
 
     if (str2bool_i(map_params('include_mysql'))) {
