@@ -11,6 +11,10 @@ define quickstack::load_balancer::proxy (
   $backend_port = '',
 ) {
 
+  if $addr == '' {
+    fail ("There is no VIP configured for the $name service")
+  }
+
   haproxy::listen { $name:
     ipaddress        => $addr,
     ports            => $port,
