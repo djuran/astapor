@@ -125,7 +125,8 @@ class quickstack::pacemaker::constraints() {
   }
 
   if (str2bool_i(map_params('include_amqp')) and
-      map_params('amqp_provider') == 'rabbitmq') {
+      map_params('amqp_provider') == 'rabbitmq' and
+      ! str2bool_i(map_params('rabbitmq_use_addrs_not_vip')) ) {
     $amqp_group = map_params("amqp_group")
     $amqp_vip = map_params("amqp_vip")
     quickstack::pacemaker::constraint::haproxy_vips { "$amqp_group":

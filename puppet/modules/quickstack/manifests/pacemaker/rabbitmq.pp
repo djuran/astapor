@@ -89,14 +89,17 @@ class quickstack::pacemaker::rabbitmq (
     }
 
     Class['::quickstack::firewall::amqp'] ->
-    Class['::quickstack::pacemaker::common'] ->
-    # below creates just one vip (not three)
-    quickstack::pacemaker::vips { "$amqp_group":
-      public_vip  => $amqp_vip,
-      private_vip => $amqp_vip,
-      admin_vip   => $amqp_vip,
-    } ->
+    Class['::quickstack::pacemaker::common']  
 
+    #Dont create a VIP if we use direct connection to the rabbit hosts
+    if (! str2bool_i(map_params('rabbitmq_use_addrs_not_vip'))) {
+      # below creates just one vip (not three)
+      quickstack::pacemaker::vips { "$amqp_group":
+        public_vip  => $amqp_vip,
+        private_vip => $amqp_vip,
+        admin_vip   => $amqp_vip,
+      } 
+    }
     # the cookie would have been handled by ::rabbitmq if
     # config_cluster was true (but it's always false here).
     Class['::rabbitmq::install'] ->
@@ -110,6 +113,15 @@ class quickstack::pacemaker::rabbitmq (
       replace => true,
     } ->
     Exec['pcs-rabbitmq-server-configured-on-this-node']
+
+    #And now fix-up the ordering. There got to be a better way of doing this
+    if (str2bool_i(map_params('rabbitmq_use_addrs_not_vip'))) {
+      Class['::quickstack::pacemaker::common'] -> Class['::rabbitmq::install']
+    } else {
+      Class['::quickstack::pacemaker::common'] -> 
+      Quickstack::Pacemaker::Vips["amqp_group"] -> 
+      Class['::rabbitmq::install']
+   }
 
     Class['::rabbitmq'] ->
     quickstack::pacemaker::manual_service { "rabbitmq-server":
